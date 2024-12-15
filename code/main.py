@@ -4,7 +4,7 @@ import subprocess
 import os
 
 def center_window(root, width, height):
-    """Centers the window on the screen."""
+    """Centers the window on the screen ."""
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     x = (screen_width // 2) - (width // 2)
