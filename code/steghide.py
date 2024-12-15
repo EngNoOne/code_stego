@@ -4,8 +4,8 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
 # Path to steghide executable
-STEGHIDE_PATH = r"F:\\BFCAI\\lv4s1\\stegano\\project\\steghide\\steghide.exe"
-OUTPUT_DIR = r"F:\\BFCAI\\lv4s1\\stegano\\project\\code"
+STEGHIDE_PATH = r"c:\\legion\\0xkillua\\stegano\\project\\steghide\\steghide.exe"
+OUTPUT_DIR = r"c:\\legion\\0xkillua\\stegano\\project\\code"
 #code
 # Color Scheme
 BACKGROUND_COLOR = "#f0f0f0"
