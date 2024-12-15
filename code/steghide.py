@@ -6,14 +6,14 @@ from tkinter import filedialog, messagebox, ttk
 # Path to steghide executable
 STEGHIDE_PATH = r"F:\\BFCAI\\lv4s1\\stegano\\project\\steghide\\steghide.exe"
 OUTPUT_DIR = r"F:\\BFCAI\\lv4s1\\stegano\\project\\code"
-
+#code
 # Color Scheme
 BACKGROUND_COLOR = "#f0f0f0"
 PRIMARY_COLOR = "#3498db"
 SECONDARY_COLOR = "#2ecc71"
 TEXT_COLOR = "#2c3e50"
 ACCENT_COLOR = "#e74c3c"
-
+#some thing
 class SteganoApp:
     def __init__(self, root):
         self.root = root
