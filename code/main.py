@@ -1,82 +1,77 @@
-from tkinter import *
-from tkinter import ttk
-import subprocess
 import os
+import tkinter as tk
+from tkinter import filedialog, messagebox
 
-def center_window(root, width, height):
-    """Centers the window on the screen ."""
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    x = (screen_width // 2) - (width // 2)
-    y = (screen_height // 2) - (height // 2)
-    root.geometry(f'{width}x{height}+{x}+{y}')
+# Function to run Steghide
+def run_steghide(password, carrier_path, secret_message_path):
+    if not (password and carrier_path and secret_message_path):
+        messagebox.showerror("Error", "All fields are required!")
+        return
 
-def open_tool(script_name):
-    """Opens the specified script."""
-    root.destroy()
-    subprocess.Popen(['python', script_name], cwd=os.path.dirname(os.path.abspath(__file__)))
+    command = f"steghide embed -cf {carrier_path} -ef {secret_message_path} -p {password}"
+    try:
+        os.system(command)
+        messagebox.showinfo("Success", "Steghide operation completed successfully!")
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to run Steghide: {e}")
 
-# Main window setup
-root = Tk()
-root.title("Steganography App")
-window_width = 800
-window_height = 500
-center_window(root, window_width, window_height)
-root.configure(bg="#1e1e2f")
+# Function to redirect to the Steghide page
+def open_steghide_page():
+    for widget in root.winfo_children():
+        widget.destroy()
 
-# Title label
-title = ttk.Label(
-    root, 
-    text="Steganography App", 
-    font=("Ubuntu", 24, "bold"), 
-    foreground="white",
-    background="#1e1e2f"
-)
-title.grid(row=0, column=0, columnspan=3, pady=(20, 10), sticky="n")
+    tk.Label(root, text="Enter Steghide Details", font=("Arial", 16)).pack(pady=10)
 
-# Subheading
-subheading = ttk.Label(
-    root, 
-    text="Choose a category to hide data:", 
-    font=("Ubuntu", 14), 
-    foreground="lightgray",
-    background="#1e1e2f"
-)
-subheading.grid(row=1, column=0, columnspan=3, pady=(0, 20), sticky="n")
+    # Password input
+    tk.Label(root, text="Password:").pack(anchor="w", padx=10)
+    password_entry = tk.Entry(root, show="*", width=30)
+    password_entry.pack(pady=5, padx=10)
 
-# Button styles
-style = ttk.Style()
-style.configure(
-    "TButton", 
-    font=("Ubuntu", 12), 
-    padding=10, 
-    foreground="black"
-)
-style.map(
-    "TButton", 
-    background=[("active", "#0056b3")], 
-    foreground=[("active", "white")]
-)
+    # Carrier file input
+    tk.Label(root, text="Carrier File Path:").pack(anchor="w", padx=10)
+    carrier_path_entry = tk.Entry(root, width=30)
+    carrier_path_entry.pack(pady=5, padx=10)
+    
+    def browse_carrier():
+        carrier_path = filedialog.askopenfilename()
+        carrier_path_entry.delete(0, tk.END)
+        carrier_path_entry.insert(0, carrier_path)
 
-# Buttons for each category
-categories = [
-    ("Hide Data in Audio", "hide_in_audio_page.py"),
-    ("Hide Data in Files", "hide_in_file_page.py"),
-    ("Hide Data in Images", "steghide.py"),
-    ("Hide Data in Video", "hide_in_video_page.py")
-]
+    tk.Button(root, text="Browse", command=browse_carrier).pack(pady=5)
 
-for i, (label, script) in enumerate(categories):
-    button = ttk.Button(
-        root, 
-        text=label, 
-        command=lambda script=script: open_tool(script)
-    )
-    button.grid(row=i + 2, column=1, pady=10, padx=20, sticky="ew")
+    # Secret message file input
+    tk.Label(root, text="Secret Message File:").pack(anchor="w", padx=10)
+    secret_message_entry = tk.Entry(root, width=30)
+    secret_message_entry.pack(pady=5, padx=10)
 
-# Make the layout centered
-root.grid_columnconfigure(0, weight=1)
-root.grid_columnconfigure(1, weight=1)
-root.grid_columnconfigure(2, weight=1)
+    def browse_message():
+        secret_message_path = filedialog.askopenfilename()
+        secret_message_entry.delete(0, tk.END)
+        secret_message_entry.insert(0, secret_message_path)
+
+    tk.Button(root, text="Browse", command=browse_message).pack(pady=5)
+
+    # Run Steghide button
+    tk.Button(
+        root,
+        text="Run Steghide",
+        command=lambda: run_steghide(
+            password_entry.get(),
+            carrier_path_entry.get(),
+            secret_message_entry.get()
+        )
+    ).pack(pady=20)
+
+# Main page
+root = tk.Tk()
+root.title("Steghide GUI")
+root.geometry("400x400")
+
+# Main Label and Button
+label = tk.Label(root, text="Welcome to Steghide GUI", font=("Arial", 16))
+label.pack(pady=20)
+
+open_button = tk.Button(root, text="Open Steghide Page", command=open_steghide_page)
+open_button.pack(pady=20)
 
 root.mainloop()
