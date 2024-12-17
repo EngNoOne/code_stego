@@ -5,13 +5,6 @@ import os
 import win32com.client
 from tkinter import messagebox
 
-def center_window(root, width, height):
-    """Centers the window on the screen."""
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    x = (screen_width // 2) - (width // 2)
-    y = (screen_height // 2) - (height // 2)
-    root.geometry(f'{width}x{height}+{x}+{y}')
 
 def open_tool(script_name):
     """Opens the specified tool (script, executable, or shortcut)."""
