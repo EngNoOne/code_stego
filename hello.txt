@@ -1,2 +1,2 @@
-hello world
-open source project
+Hello World
+Open Source Project GitHub
