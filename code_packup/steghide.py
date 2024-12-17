@@ -52,27 +52,7 @@ class SteganoApp:
         hide_frame = ttk.LabelFrame(main_frame, text="Hide Secret File", style='TLabelframe')
         hide_frame.pack(fill=tk.X, pady=(0, 10))
         
-        # Carrier file input
-        ttk.Label(hide_frame, text="Carrier File:", style='TLabel').pack(anchor='w')
-        self.carrier_entry = ttk.Entry(hide_frame, width=50)
-        self.carrier_entry.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 10))
-        
-        carrier_button = ttk.Button(
-            hide_frame, 
-            text="Browse", 
-            command=lambda: self.upload_file(self.carrier_entry),
-            style='TButton'
-        )
-        carrier_button.pack(side=tk.RIGHT)
-        
-        # Secret file input
-        secret_frame = ttk.Frame(main_frame)
-        secret_frame.pack(fill=tk.X, pady=(0, 10))
-        
-        ttk.Label(secret_frame, text="Secret File:", style='TLabel').pack(anchor='w')
-        self.secret_entry = ttk.Entry(secret_frame, width=50)
-        self.secret_entry.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 10))
-        
+       #erorr
         secret_button = ttk.Button(
             secret_frame, 
             text="Browse", 
