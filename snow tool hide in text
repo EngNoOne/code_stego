@@ -1,0 +1,84 @@
+import subprocess
+import tkinter as tk
+from tkinter import filedialog, messagebox
+
+
+def conceal_message():
+    input_file = filedialog.askopenfilename(title="Select Input File")
+    if not input_file:
+        return
+
+    output_file = filedialog.asksaveasfilename(title="Save Output File As")
+    if not output_file:
+        return
+
+    message = message_entry.get()
+    password = password_entry.get()
+
+    if not message:
+        messagebox.showerror("Error", "Message cannot be empty.")
+        return
+
+    try:
+        command = [
+            snow_tool_path,
+            "-C",
+            "-m", message,
+            "-p", password,
+            input_file,
+            output_file
+        ]
+        result = subprocess.run(command, capture_output=True, text=True)
+
+        if result.returncode == 0:
+            messagebox.showinfo("Success", f"Message concealed in '{output_file}'.")
+        else:
+            messagebox.showerror("Error", result.stderr)
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
+
+def extract_message():
+    input_file = filedialog.askopenfilename(title="Select Input File")
+    if not input_file:
+        return
+
+    password = password_entry.get()
+
+    try:
+        command = [
+            snow_tool_path,
+            "-C",
+            "-p", password,
+            input_file
+        ]
+        result = subprocess.run(command, capture_output=True, text=True)
+
+        if result.returncode == 0:
+            extracted_message = result.stdout.strip()
+            messagebox.showinfo("Extracted Message", f"Message: {extracted_message}")
+        else:
+            messagebox.showerror("Error", result.stderr)
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
+snow_tool_path = r"E:\lectures\semister 7\steganography\Stegno Project\Stegno Project\snwdos32\SNOW.EXE"  #حط هنا الباث
+
+root = tk.Tk()
+root.title("Snow CLI Tool - GUI")
+
+tk.Label(root, text="Message:").grid(row=0, column=0, padx=5, pady=5)
+message_entry = tk.Entry(root, width=50)
+message_entry.grid(row=0, column=1, padx=5, pady=5)
+
+tk.Label(root, text="Password:").grid(row=1, column=0, padx=5, pady=5)
+password_entry = tk.Entry(root, show="*", width=50)
+password_entry.grid(row=1, column=1, padx=5, pady=5)
+
+conceal_button = tk.Button(root, text="Conceal Message", command=conceal_message)
+conceal_button.grid(row=2, column=0, padx=5, pady=10)
+
+extract_button = tk.Button(root, text="Extract Message", command=extract_message)
+extract_button.grid(row=2, column=1, padx=5, pady=10)
+
+root.mainloop()
