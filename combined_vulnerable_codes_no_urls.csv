@@ -1,0 +1,149 @@
+type,code
+SQL Injection,"String firstname = req.getParameter(""firstname"");
+String lastname = req.getParameter(""lastname"");
+// FIXME: do your own validation to detect attacks
+String query = ""SELECT id, firstname, lastname FROM authors WHERE firstname = ? and lastname = ?"";
+PreparedStatement pstmt = connection.prepareStatement( query );
+pstmt.setString( 1, firstname );
+pstmt.setString( 2, lastname );
+try
+{
+ResultSet results = pstmt.execute( );
+}"
+SQL Injection,"...
+string userName = ctx.getAuthenticatedUserName();
+string query = ""SELECT * FROM items WHERE owner = '""
++ userName + ""' AND itemname = '""
++ ItemName.Text + ""'"";
+sda = new SqlDataAdapter(query, conn);
+DataTable dt = new DataTable();
+sda.Fill(dt);
+..."
+SQL Injection,"SELECT * FROM items
+WHERE owner =
+AND itemname = ;"
+SQL Injection,"""name' OR
+'a'='a"""
+SQL Injection,"SELECT * FROM items
+WHERE owner = 'wiley'
+AND itemname = 'name' OR 'a'='a';"
+SQL Injection,"SELECT * FROM items
+WHERE owner = 'hacker'
+AND itemname = 'name';
+
+DELETE FROM items;
+
+--'"
+SQL Injection,"SELECT * FROM items
+WHERE owner = 'hacker'
+AND itemname = 'name';
+
+DELETE FROM items;
+
+SELECT * FROM items WHERE 'a'='a';"
+SQL Injection,"procedure get_item (
+itm_cv IN OUT ItmCurTyp,
+usr in varchar2,
+itm in varchar2)
+is
+open itm_cv for ' SELECT * FROM items WHERE ' ||
+'owner = '''|| usr ||
+' AND itemname = ''' || itm || '''';
+end get_item;"
+SQL Injection,"<stockCheck>
+<productId>123</productId>
+<storeId>999 &#x53;ELECT * FROM information_schema.tables</storeId>
+</stockCheck>"
+SQL Injection,"String query = ""SELECT * FROM products WHERE category = '""+ input + ""'"";
+Statement statement = connection.createStatement();
+ResultSet resultSet = statement.executeQuery(query);"
+SQL Injection,"PreparedStatement statement = connection.prepareStatement(""SELECT * FROM products WHERE category = ?"");
+statement.setString(1, input);
+ResultSet resultSet = statement.executeQuery();"
+Cross-Site Scripting (XSS),"<% String eid = request.getParameter(""eid""); %>
+...
+Employee ID: <%= eid %>"
+Cross-Site Scripting (XSS),"<html><body><?php
+print ""Not found: "" . urldecode($_SERVER[""REQUEST_URI""]);
+?></body></html>"
+Cross-Site Scripting (XSS),"var search = document.getElementById('search').value;
+var results = document.getElementById('results');
+results.innerHTML = 'You searched for: ' + search;"
+Command Injection,"#include <stdio.h>
+#include <unistd.h>
+
+int main(int argc, char **argv) {
+char cat[] = ""cat "";
+char *command;
+size_t commandLength;
+
+commandLength = strlen(cat) + strlen(argv[1]) + 1;
+command = (char *) malloc(commandLength);
+strncpy(command, cat, commandLength);
+strncat(command, argv[1], (commandLength - strlen(cat)) );
+
+system(command);
+return (0);
+}"
+Command Injection,"$ ./catWrapper Story.txt
+When last we left our heroes..."
+Command Injection,"$./catWrapper""Story.txt; ls""When last we left our heroes...
+Story.txt               doubFree.c              nullpointer.c
+unstosig.c              www*                    a.out*
+format.c                strlen.c                useFree*
+catWrapper*             misnull.c               strlength.c             useFree.c
+commandinjection.c      nodefault.c             trunc.c                 writeWhatWhere.c"
+Command Injection,"int main(char* argc, char** argv) {
+char cmd[CMD_MAX] = ""/usr/bin/cat "";
+strcat(cmd, argv[1]);
+system(cmd);
+}"
+Command Injection,"...
+char* home=getenv(""APPHOME"");
+char* cmd=(char*)malloc(strlen(home)+strlen(INITCMD));
+if (cmd) {
+strcpy(cmd,home);
+strcat(cmd,INITCMD);
+execl(cmd, NULL);
+}
+..."
+Command Injection,"#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(int argc, char **argv)
+{
+char command[256];
+
+if(argc != 2) {
+printf(""Error: Please enter a program to time!\n"");
+return -1;
+}
+
+memset(&command, 0, sizeof(command));
+
+strcat(command, ""time ./"");
+strcat(command, argv[1]);
+
+system(command);
+return 0;
+}"
+Command Injection,"Please specify the name of the file to delete
+
+uid=33(www-data) gid=33(www-data) groups=33(www-data)"
+Command Injection,"Replace or Ban arguments with “;”
+Other shell escapes available
+Example:
+–  &&
+–  |
+–  ..."
+Cross-Site Request Forgery (CSRF),"<body onload=""document.forms[0].submit()"">
+
+<form..."
+Cross-Site Request Forgery (CSRF),"POST /email/change HTTP/1.1
+Host: vulnerable-website.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 30
+Cookie: session=yvthwsztyeQkAPzeQ5gHgTvlyxHfsAfE
+
+email=wiener@normal-user.com"
