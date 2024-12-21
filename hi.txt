@@ -1,4 +1,8 @@
 hi there ! ok now ! edit in 16/12 ! edit in 17/12 !
+<<<<<<< HEAD
 edit in 18/12 ! 
 daily homework 19/12 🚨
 daily homework 21/12
+=======
+edit in 18/12 ! edit in 21/12
+>>>>>>> 1ca35a0 (update 21/12)
