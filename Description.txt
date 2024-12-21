@@ -1,3 +1,5 @@
 Steganography is a technique used to hide secret data (like text or files)
 within multimedia files such as images, audio, or video   
 in a way that makes the hidden data undetectable to the naked eye or ear.
+
+ya ragel mthzr4 b2a da klam kber awy da
