@@ -4,7 +4,7 @@ from tkinter import filedialog, messagebox
 import os
 
 FFMPEG_PATH = r"E:\lectures\semister 7\steganography\Stegno Project\Stegno Project\ffmpeg-master-latest-win64-gpl-shared\ffmpeg-master-latest-win64-gpl-shared\bin\ffmpeg.exe"  # حط الباث
-
+#this function to center the pop up window
 def center_window(root, width, height):
     """Centers the window on the screen."""
     screen_width = root.winfo_screenwidth()
@@ -33,7 +33,7 @@ def on_button_hover(event):
 def on_button_leave(event):
     """Restores button background color when hover ends."""
     event.widget.config(bg="SystemButtonFace", fg="black")
-
+#this function hides the message in the metafile data (specifically in header)
 def conceal_message():
     """Conceals a message in the video metadata."""
     input_video = filedialog.askopenfilename(title="Select Input Video", filetypes=[("Video Files", "*.mp4")])
@@ -64,7 +64,7 @@ def conceal_message():
             messagebox.showerror("Error", result.stderr)
     except Exception as e:
         messagebox.showerror("Error", str(e))
-
+#this function is to extract the secret message from the video metadata
 def extract_message():
     """Extracts a message from the video metadata."""
     input_video = filedialog.askopenfilename(title="Select Input Video", filetypes=[("Video Files", "*.mp4")])
